@@ -38,6 +38,67 @@ function resetBoard() {
 /* Set up listeners for click events */
 function attachListeners() {
     document.querySelectorAll('.cell').forEach(cell => {
-        cell.addEventListener('click', handleCellClick, { once: true });
+        cell.addEventListener('click', handleClick, { once: true });
     });
+}
+
+function handleClick(e) {
+    const cell = e.target;
+    const row = cell.getAttribute('data-row');
+    const col = cell.getAttribute('data-col');
+
+    // Make move
+    if (gameBoard[row][col] === null) {
+        gameBoard[row][col] = currentPlayer;
+        cell.innerText = currentPlayer;
+        cell.classList.add('player' + currentPlayer);
+
+        // Check for win or draw
+        if (checkWin()) {
+            alert(`${currentPlayer} wins!`);
+            setTimeout(() => {
+                reset();
+            }, 1000); 
+        } else if (checkDraw()) {
+            alert("It's a draw!");
+            setTimeout(() => {
+                reset();
+            }, 1000); 
+        }
+
+        // Switch player or AI move
+        currentPlayer = (currentPlayer === 'X') ? 'O' : 'X';
+        if (gameMode === 'AI' && currentPlayer === 'O') {
+            aiMove();
+        }
+    }
+}
+
+/* Check to see if the game is over */
+function checkWin() {
+    const lines = [
+        [[0, 0], [0, 1], [0, 2]], [[1, 0], [1, 1], [1, 2]], [[2, 0], [2, 1], [2, 2]], // Rows
+        [[0, 0], [1, 0], [2, 0]], [[0, 1], [1, 1], [2, 1]], [[0, 2], [1, 2], [2, 2]], // Columns
+        [[0, 0], [1, 1], [2, 2]], [[0, 2], [1, 1], [2, 0]]  // Diagonals
+    ];
+    return lines.some(line => {
+        const [[r1, c1], [r2, c2], [r3, c3]] = line;
+        return gameBoard[r1][c1] && gameBoard[r1][c1] === gameBoard[r2][c2] && gameBoard[r1][c1] === gameBoard[r3][c3];
+    });
+}
+
+/* Check to see if the game ends in a draw */
+function checkDraw() {
+    return gameBoard.flat().every(cell => cell !== null);
+}
+
+/* Use the current board data to have the 'AI' make a move */
+function aiMove() {
+    // Implement later.
+}
+
+/* Send the user back to the main screen after the game is over. */
+function reset() {
+    document.getElementById('gameScreen').classList.add('hide');
+    document.getElementById('mainScreen').classList.remove('hide');
 }
