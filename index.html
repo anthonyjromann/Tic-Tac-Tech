@@ -8,8 +8,26 @@
 </head>
 <body>
     <div id="mainScreen">
+        <h1>Tic-Tac-Tech</h1>
         <button id="twoPlayerGame">2-Player Game</button>
         <button id="playAgainstAI">Play Against AI</button>
+    </div>
+    <div id="gameScreen" class="hide">
+        <div class="row">
+            <div class="cell" data-row="0" data-col="0"></div>
+            <div class="cell" data-row="0" data-col="1"></div>
+            <div class="cell" data-row="0" data-col="2"></div>
+        </div>
+        <div class="row">
+            <div class="cell" data-row="1" data-col="0"></div>
+            <div class="cell" data-row="1" data-col="1"></div>
+            <div class="cell" data-row="1" data-col="2"></div>
+        </div>
+        <div class="row">
+            <div class="cell" data-row="2" data-col="0"></div>
+            <div class="cell" data-row="2" data-col="1"></div>
+            <div class="cell" data-row="2" data-col="2"></div>
+        </div>
     </div>
     <script src="game.js"></script>
 </body>
